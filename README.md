@@ -1,4 +1,27 @@
-# REST API example using Sequelize
+# INST377 Lab Support Software
+
+This repository is the starting point for most labs in INST377. It represents a working "server" and "client" package for your first seven weeks of class. You can use any of the code you find here to help you with your labs or your group projects.
+
+## Getting Started
+
+* "Clone" or download this repository using the large green button marked "code"
+* Install the software dependencies
+* Start your server, which will run on `port 3000` locally
+
+### Install Dependencies 
+
+    npm install
+
+### Run the Server
+
+    npm start
+<hr>
+
+Below are details of the API contained within this piece of labwork.
+
+<hr>
+
+## REST API example using Sequelize
 <table>
   <thead>
     <tr>
@@ -25,15 +48,6 @@
     </tr>
   </tbody>
 </table>
-
-## Install Dependencies 
-
-    npm install
-
-## Run the Server
-
-    npm start
-<hr>
 
 # Dining Hall
 
