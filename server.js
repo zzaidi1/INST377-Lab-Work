@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
+import labRoutes from './server/labRoutes.js';
 import apiRoutes from './server/routes/apiRoutes.js';
 import reload from 'livereload';
 import connectReload from 'connect-livereload';
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static(staticFolder));
+app.use('/template', labRoutes);
 // app.use('/api', apiRoutes);
 
 async function bootServer() {
