@@ -7,9 +7,10 @@ import path from 'path';
 const __dirname = path.resolve();
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/server/templates/demo.html`);
-});
+router.route('/')
+  .get((req, res) => {
+    res.sendFile(`${__dirname}/server/templates/demo.html`);
+  });
 
 export default router;
 
