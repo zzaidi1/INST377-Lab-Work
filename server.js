@@ -32,8 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static(staticFolder));
-app.use('/template', labRoutes);
-// app.use('/api', apiRoutes);
+// app.use('/template', labRoutes);
+app.use('/api', apiRoutes);
 
 async function bootServer() {
   try {
