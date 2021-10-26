@@ -2,6 +2,7 @@
 import express from 'express';
 import sequelize from 'sequelize';
 import chalk from 'chalk';
+import fetch from 'node-fetch';
 
 import db from '../database/initializeDB.js';
 
@@ -9,13 +10,51 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   console.log('You touched the default route!');
-  res.send('Welcome to the UMD Dining API!');
+  res.json({message: 'Welcome to the UMD Dining API!'});
+  // res.send('Welcome to the UMD Dining API!');
 });
 
-router.get('/demo', (req, res) => {
-  console.log('You touched the demo route!');
-  res.send('<h1>Welcome to the UMD Dining API!</h1><br>');
-});
+// /////////////////////////////////
+// Food Inspection Set Demos
+// /////////////////////////////////
+router.route('/foodServicesPG')
+  .get(async (req, res) => {
+    try {
+      const url = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
+      const data = await fetch(url);
+      const json = await data.json();
+      console.log(json);
+
+      res.json({data: data});
+    } catch (err) {
+      console.log(error);
+      res.json({error: error});
+    }
+  })
+  .put((req, res) => {
+    try {
+      res.json({message: 'put FoodServices endpoint'});
+    } catch (err) {
+      console.log(error);
+      res.json({error: 'Something went wrong on the server'});
+    }
+  })
+  .post((req, res) => {
+    try {
+      res.json({message: 'post FoodServices endpoint'});
+    } catch (err) {
+      console.log(error);
+      res.json({error: 'Something went wrong on the server'});
+    }
+  })
+  .delete((req, res) => {
+    try {
+      res.json({message: 'delete FoodServices endpoint'});
+    } catch (err) {
+      console.log(error);
+      res.json({error: 'Something went wrong on the server'});
+    }
+  });
 
 // /////////////////////////////////
 // ////WholeMeal demos////////
