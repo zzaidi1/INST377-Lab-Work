@@ -42,6 +42,7 @@ router.route('/foodServicesPG')
   })
   .post((req, res) => {
     try {
+      console.log('Touched post endpoint', req.body);
       res.json({message: 'post FoodServices endpoint'});
     } catch (err) {
       console.log(error);
