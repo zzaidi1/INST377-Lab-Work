@@ -8,6 +8,7 @@ import db from '../database/initializeDB.js';
 
 const router = express.Router();
 
+// localhost:3000/api
 router.get('/', (req, res) => {
   console.log('You touched the default route!');
   res.json({message: 'Welcome to the UMD Dining API!'});
@@ -25,7 +26,7 @@ router.route('/foodServicesPG')
       const json = await data.json();
       console.log(json);
 
-      res.json({data: data});
+      res.json({data: json});
     } catch (err) {
       console.log(error);
       res.json({error: error});
