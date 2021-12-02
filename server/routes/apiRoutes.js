@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import fetch from 'node-fetch';
 
 import db from '../database/initializeDB.js';
+import hallIdQuery from '../controllers/diningHall.js';
 
 const router = express.Router();
 
@@ -58,31 +59,6 @@ router.route('/foodServicesPG')
       res.json({error: 'Something went wrong on the server'});
     }
   });
-
-// const mealMapCustom = `SELECT hall_name,
-//   hall_address,
-//   hall_lat,
-//   hall_long,
-//   meal_name
-// FROM
-//   Meals m
-// INNER JOIN Meals_Locations ml
-//   ON m.meal_id = ml.meal_id
-// INNER JOIN Dining_Hall d
-// ON d.hall_id = ml.hall_id;`;
-
-const hallIdQuery = `SELECT hall_name,
-hall_address,
-hall_lat,
-hall_long,
-meal_name 
-FROM
-Meals m
-INNER JOIN Meals_Locations ml 
-  ON m.meal_id = ml.meal_id
-INNER JOIN Dining_Hall d
-ON d.hall_id = ml.hall_id
-WHERE ml.hall_id = :hall_id;`;
 
 router.route('/sqlDemo')
   .post(async (req, res) => {
