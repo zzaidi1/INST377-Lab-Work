@@ -70,17 +70,18 @@ INNER JOIN Meals_Locations ml
   ON m.meal_id = ml.meal_id
 INNER JOIN Dining_Hall d
 ON d.hall_id = ml.hall_id;`;
-router.route('/sqlDemo', async (req, res) => {
-  try {
-    const result = await db.sequelizeDB.query(mealMapCustom, {
-      type: sequelize.QueryTypes.SELECT
-    });
-    res.json(result);
-  } catch (err) {
-    console.log(err);
-    res.send({message: 'Something went wrong on the SQL request'});
-  }
-});
+router.route('/sqlDemo')
+  .post(async (req, res) => {
+    try {
+      const result = await db.sequelizeDB.query(mealMapCustom, {
+        type: sequelize.QueryTypes.SELECT
+      });
+      res.json(result);
+    } catch (err) {
+      console.log(err);
+      res.send({message: 'Something went wrong on the SQL request'});
+    }
+  });
 
 // /////////////////////////////////
 // ////WholeMeal demos////////
