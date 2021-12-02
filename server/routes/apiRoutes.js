@@ -43,6 +43,7 @@ router.route('/foodServicesPG')
   .post((req, res) => {
     try {
       console.log('Touched post endpoint', req.body);
+      console.log(req.body?.resto);
       res.json({message: 'post FoodServices endpoint'});
     } catch (err) {
       console.log(error);
@@ -57,6 +58,29 @@ router.route('/foodServicesPG')
       res.json({error: 'Something went wrong on the server'});
     }
   });
+
+const mealMapCustom = `SELECT hall_name,
+  hall_address,
+  hall_lat,
+  hall_long,
+  meal_name
+FROM
+  Meals m
+INNER JOIN Meals_Locations ml 
+  ON m.meal_id = ml.meal_id
+INNER JOIN Dining_Hall d
+ON d.hall_id = ml.hall_id;`;
+router.route('/sqlDemo', async (req, res) => {
+  try {
+    const result = await db.sequelizeDB.query(mealMapCustom, {
+      type: sequelize.QueryTypes.SELECT
+    });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.send({message: 'Something went wrong on the SQL request'});
+  }
+});
 
 // /////////////////////////////////
 // ////WholeMeal demos////////
@@ -354,28 +378,28 @@ router.get('/table/data', async (req, res) => {
   }
 });
 
-const mealMapCustom = `SELECT hall_name,
-  hall_address,
-  hall_lat,
-  hall_long,
-  meal_name
-FROM
-  Meals m
-INNER JOIN Meals_Locations ml 
-  ON m.meal_id = ml.meal_id
-INNER JOIN Dining_Hall d
-ON d.hall_id = ml.hall_id;`;
-router.get('/map/data', async (req, res) => {
-  try {
-    const result = await db.sequelizeDB.query(mealMapCustom, {
-      type: sequelize.QueryTypes.SELECT
-    });
-    res.json(result);
-  } catch (err) {
-    console.error(err);
-    res.send('Server error');
-  }
-});
+// const mealMapCustom = `SELECT hall_name,
+//   hall_address,
+//   hall_lat,
+//   hall_long,
+//   meal_name
+// FROM
+//   Meals m
+// INNER JOIN Meals_Locations ml
+//   ON m.meal_id = ml.meal_id
+// INNER JOIN Dining_Hall d
+// ON d.hall_id = ml.hall_id;`;
+// router.get('/map/data', async (req, res) => {
+//   try {
+//     const result = await db.sequelizeDB.query(mealMapCustom, {
+//       type: sequelize.QueryTypes.SELECT
+//     });
+//     res.json(result);
+//   } catch (err) {
+//     console.error(err);
+//     res.send('Server error');
+//   }
+// });
 router.get('/custom', async (req, res) => {
   try {
     const result = await db.sequelizeDB.query(req.body.query, {
