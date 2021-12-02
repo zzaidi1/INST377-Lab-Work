@@ -63,8 +63,11 @@ router.route('/foodServicesPG')
 router.route('/sqlDemo')
   .post(async (req, res) => {
     try {
+      console.log(req.body);
+      console.log(req.body?.dining);
+      const hallId = req.body?.dining || 0;
       const result = await db.sequelizeDB.query(hallIdQuery, {
-        replacements: { hall_id: '1' },
+        replacements: { hall_id: hallId },
         type: sequelize.QueryTypes.SELECT
       });
       res.json(result);
