@@ -70,7 +70,7 @@ router.route('/sqlDemo')
         replacements: { hall_id: hallId },
         type: sequelize.QueryTypes.SELECT
       });
-      res.json(result);
+      res.json({data: result});
     } catch (err) {
       console.log(err);
       res.send({message: 'Something went wrong on the SQL request'});
