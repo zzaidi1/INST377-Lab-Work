@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import path from 'path';
 import apiRoutes from './server/routes/apiRoutes.js';
 import labRoutes from './server/labRoutes.js';
-// import db from './server/database/initializeDB.js';
 
 dotenv.config();
 const __dirname = path.resolve();
