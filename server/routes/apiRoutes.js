@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 // /////////////////////////////////
 // Food Inspection Set Demos
 // /////////////////////////////////
-router.route('/foodServicesPG')
+router.route('/foodServicesPG') // localhost:3000/api/foodServicesPG
   .get(async (req, res) => {
     try {
       const url = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
@@ -27,7 +27,8 @@ router.route('/foodServicesPG')
       const json = await data.json();
       console.log(json);
 
-      res.json({data: json});
+      // this causes us to need to use dot notation to access our information
+      res.json({data: json}); 
     } catch (err) {
       console.log(error);
       res.json({error: error});
