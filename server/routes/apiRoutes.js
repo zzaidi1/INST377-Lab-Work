@@ -4,139 +4,52 @@ import sequelize from 'sequelize';
 import chalk from 'chalk';
 import fetch from 'node-fetch';
 
+import foodServiceRoutes from './foodServiceRoutes.js';
+import sqlDemoRoutes from './sqlDemoRoutes.js';
+import modelDemoRoutes from './modelDemoRoutes.js';
+
 import db from '../database/initializeDB.js';
-import hallIdQuery from '../controllers/diningHall.js';
 
 const router = express.Router();
 
 // localhost:3000/api
 router.get('/', (req, res) => {
   console.log('You touched the default route!');
-  res.json({message: 'Welcome to the UMD Dining API!'});
+  res.json({ message: 'Welcome to the UMD Dining API!' });
   // res.send('Welcome to the UMD Dining API!');
 });
 
-// /////////////////////////////////
-// Food Inspection Set Demos
-// /////////////////////////////////
-router.route('/foodServicesPG') // localhost:3000/api/foodServicesPG
-  .get(async (req, res) => {
-    try {
-      const url = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
-      const data = await fetch(url);
-      const json = await data.json();
-      console.log(json);
+/* Prof A subrouter inclusion demo */
+router.use('/foodServicesPG', foodServiceRoutes);
+router.route('/foodServicesPG/:category').get(async (req, res) => {
+  try {
+    // + req.params.category
+    // TODO: if category does not exist, return
 
-      // this causes us to need to use dot notation to access our information
-      res.json({data: json}); 
-    } catch (err) {
-      console.log(error);
-      res.json({error: error});
-    }
-  })
-  .put((req, res) => {
-    try {
-      res.json({message: 'put FoodServices endpoint'});
-    } catch (err) {
-      console.log(error);
-      res.json({error: 'Something went wrong on the server'});
-    }
-  })
-  .post((req, res) => {
-    try {
-      console.log('Touched post endpoint', req.body);
-      console.log(req.body?.resto);
-      res.json({message: 'post FoodServices endpoint'});
-    } catch (err) {
-      console.log(error);
-      res.json({error: 'Something went wrong on the server'});
-    }
-  })
-  .delete((req, res) => {
-    try {
-      res.json({message: 'delete FoodServices endpoint'});
-    } catch (err) {
-      console.log(error);
-      res.json({error: 'Something went wrong on the server'});
-    }
-  });
+    const { category } = req.params;
+    const url = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
+    const data = await fetch(url);
+    const json = await data.json();
+    console.log(json);
 
-router.route('/sqlDemo')
-  .post(async (req, res) => {
-    try {
-      console.log(req.body);
-      console.log(req.body?.dining);
-      const hallId = req.body?.dining || 0;
-      const result = await db.sequelizeDB.query(hallIdQuery, {
-        replacements: { hall_id: hallId },
-        type: sequelize.QueryTypes.SELECT
-      });
-      res.json({data: result});
-    } catch (err) {
-      console.log(err);
-      res.send({message: 'Something went wrong on the SQL request'});
-    }
-  });
+    const filteredData = json.filter((item) => item.category.toLowerCase() === category.toLowerCase());
 
-// /////////////////////////////////
-// ////WholeMeal demos////////
-// /////////////////////////////////
-router.route('/wholeMeal')
-  .get(async (req, res) => {
-    try {
-      const meals = await db.Meals.findAll();
-      const macros = await db.Macros.findAll();
-      const wholeMeals = meals.map((meal) => {
-        const macroEntry = macros.find((macro) => macro.meal_id === meal.meal_id);
-        console.log('meal', meal);
-        console.log('macroEntry', macroEntry);
+    console.log(filteredData);
 
-        return {
-          ...meal.dataValues,
-          ...macroEntry.dataValues
-        };
-      });
-      res.json({data: wholeMeals});
-    } catch (err) {
-      console.error(err);
-      res.json({message: 'Something went wrong on the server'});
-    }
-  });
+    // this causes us to need to use dot notation to access our information
+    res.json({ data: filteredData});
+  } catch (err) {
+    console.log(err);
+    // res.json({error: err});
+    res.json({ message: 'something went wrong' });
+  }
+});
 
-router.route('/wholeMeal2')
-  .get(async (req, res) => {
-    try {
-      const meals = await db.Meals.findAll({ include: db.Macros, limit: 10 });
+/* Demo food services custom query controller */
+router.use('/sqlDemo', sqlDemoRoutes);
 
-      const wholeMeals = meals.map((meal) => {
-        console.log('meal', meal);
-        const dataObject = {
-          ...meal.dataValues,
-          ...meal.Macro.dataValues
-        };
-
-        delete dataObject.Macro;
-        return dataObject;
-      });
-
-      console.log(wholeMeals);
-      res.json({data: wholeMeals});
-    } catch (err) {
-      console.error(err);
-      res.json({message: err});
-    }
-  })
-  .post(async (req, res) => {
-    try {
-      console.log('Received POST on /wholeMeal2', req.body);
-      if (!req.body.name) {
-        throw new Error('Missing name');
-      }
-    } catch (err) {
-      console.error(err);
-      res.json({message: err});
-    }
-  });
+/* Demo how to use an ORM model system */
+router.use('/wholeMeal', modelDemoRoutes);
 
 /// /////////////////////////////////
 /// ////Dining Hall Endpoints////////
@@ -187,7 +100,7 @@ router.post('/dining', async (req, res) => {
       hall_long: req.body.hall_long
     });
     // res.json(newDining);
-    res.json({message: 'not yet'});
+    res.json({ message: 'not yet' });
   } catch (err) {
     console.error(err);
     res.json('Server error');
@@ -222,7 +135,7 @@ router.put('/dining', async (req, res) => {
         }
       }
     );
-    res.json({update: req.body.hall_name});
+    res.json({ update: req.body.hall_name });
   } catch (err) {
     console.error(err);
     res.send('Server error');
