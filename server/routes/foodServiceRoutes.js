@@ -4,10 +4,6 @@ import fetch from 'node-fetch';
 
 const router = express.Router();
 
-// router.get('/', (req, res) => {
-//   console.log('You touched the foodService Route!');
-//   res.json({message: 'Welcome to the PG County Food API!'});
-// });
 router.route('/')
   .get(async (req, res) => {
     try {
