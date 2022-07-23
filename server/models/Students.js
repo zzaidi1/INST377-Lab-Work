@@ -1,2 +1,0 @@
-export default (sequelize, DataTypes) => {
-}

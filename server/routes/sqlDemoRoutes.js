@@ -1,45 +1,32 @@
+/* eslint-disable max-len */
 import express from 'express';
-import sequelize from 'sequelize';
-import chalk from 'chalk';
-import fetch from 'node-fetch';
-
-import db from '../database/initializeDB.js';
-// import hallIdQuery from '../controllers/diningHall.js';
-import mealsQuery from '../controllers/meals_query.js';
+import controllers from '../controllers/sqlControllers.js';
 
 const router = express.Router();
 
 // /api/sqlDemo
+/*
+  ## What is this file?
+
+  This is a listing of all the routes you can touch when you call for an address
+  Each basic address, like '/', has four possible actions
+  - GET
+    Accepts values through the URL, and can be bookmarked by browsers. It is therefore great for long-term pages, but not very private.
+    Used for main pages, permanent item filters and so on.
+
+  - POST
+    Accepts values through a form delivery, which can be encrypted. It's not bookmarkable! You use this for more customized pages.
+    It is usually used to add a new record to a database.
+
+  ## Why is it so small?
+  There are only two verbs on this file, and the actions those verbs take are stored elsewhere, in /controllers.
+  This is an example of "separation of concerns" - in here, we ONLY want to list what we're doing.
+  When it works, we can then move our other work into other places, so our colleagues are less likely to break our work.
+*/
+
 router
   .route('/')
-  .get(async (req, res) => {
-    try {
-      console.log('Touched sqlDemo get');
-      const result = await db.sequelizeDB.query(mealsQuery, {
-        type: sequelize.QueryTypes.SELECT
-      });
-      res.json({ data: result });
-    } catch (error) {
-      console.log('sqlDemo get error', error);
-      res.json({ message: 'error in sqlDemo' });
-    }
-  })
-  .post(async (req, res) => {
-    // TODO - Table 'Dining_Hall_Tracker.Meals' doesn't exist
-    // TODO: we need to demonstrate hooking this to a form
-    try {
-      console.dir(req.body, {depth: null}); // Checking that we have a body at all!
-      console.log(req.body?.category); // Optionally checking for the dining value on body object
-      const mealCategory = req.body?.category || 0;
-      const result = await db.sequelizeDB.query(mealsQuery, {
-        replacements: { meal_category: mealCategory },
-        type: sequelize.QueryTypes.SELECT
-      });
-      res.json({ data: result });
-    } catch (err) {
-      console.log(err);
-      res.send({ message: err});
-    }
-  });
+  .get((req, res) => controllers.sqlRouteGet(req, res)) // this has no curly braces because it is "implicitly" calling the controller function
+  .post((req, res) => controllers.sqlRoutePost(req, res));
 
 export default router;

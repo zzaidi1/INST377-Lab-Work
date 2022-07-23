@@ -1,11 +1,12 @@
 /* eslint-disable no-console */
+// NPM library dependencies
 import express from 'express';
 import reload from 'livereload';
-import connectReload from 'connect-livereload';
 import dotenv from 'dotenv';
 import path from 'path';
+
+// lab-authored routes
 import apiRoutes from './server/routes/apiRoutes.js';
-import labRoutes from './server/labRoutes.js';
 
 dotenv.config();
 const __dirname = path.resolve();
