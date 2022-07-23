@@ -21,19 +21,18 @@ const router = express.Router();
   In this class, we separate our data routes and our content routes.
 
   Content is available at 'http://your-app.heroku.com/'
-  Data is available at 'http://your-app.heroku.com/api' - you can find this command at line
+  Data is available at 'http://your-app.heroku.com/api'
 
+  This is set up in server.js at about line 46, where it says `app.use(express.static(staticFolder));`
 */
 /* eslint-enable max-len */
 
-// localhost:3000/api by default, or your personal Heroku server otherwise
-
-router.get('/', (req, res) => {
-  /*
-   */
-  console.log('You touched the default route!');
-  res.json({ message: 'Welcome to the UMD Dining API!' });
-});
+// localhost:3000/api when developing locally
+router.route('/')
+  .get((req, res) => {
+    console.log('You touched the default route!');
+    res.json({ message: 'Welcome to the INST377 API!' });
+  });
 
 /* How To Include A Sub-Route */
 
