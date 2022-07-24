@@ -71,8 +71,8 @@ router.route('/templateDemo') // here we name our route
 // which we specify at the top of this one with an 'import' statement
 // When we use these routes, we don't repeat ourselves, which reduces the risk of breakage
 
-/* /api/foodServicesPG is the main route we use in labs */
-router.use('/foodServicesPG', foodServiceRoutes);
+/* /api/foodServicePG is the main route we use in labs */
+router.use('/foodServicePG', foodServiceRoutes);
 
 /* /api/sqlDemo is an advanced set of files which demonstrate
   how to use your own database - it's based on using one from 327 for this class
