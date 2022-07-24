@@ -1,6 +1,4 @@
 /* eslint-disable max-len */
-import sequelize from 'sequelize';
-
 import db from '../database/initializeDB.js';
 import queries from '../queries/index.js';
 
@@ -52,13 +50,13 @@ async function sqlRouteGetAll(req, res) {
 async function sqlRoutePost(req, res) {
   // TODO: we need to demonstrate hooking this to a form
   try {
-    console.dir(req.body, { depth: null }); // Checking that we have a body at all!
-    console.log(req.body?.category); // Optionally checking for the dining value on body object
-    const mealCategory = req.body?.category || 0;
-    const result = await db.sequelizeDB.query(queries.meals, {
-      replacements: { meal_category: mealCategory },
-      type: sequelize.QueryTypes.SELECT
-    });
+    // console.dir(req.body, { depth: null }); // Checking that we have a body at all!
+    // console.log(req.body?.category); // Optionally checking for the dining value on body object
+    // const mealCategory = req.body?.category || 0;
+    // const result = await db.sequelizeDB.query(queries.meals, {
+    //   replacements: { meal_category: mealCategory },
+    //   type: sequelize.QueryTypes.SELECT
+    // });
     res.json({ data: result });
   } catch (err) {
     console.log(err);
@@ -67,6 +65,6 @@ async function sqlRoutePost(req, res) {
 }
 
 export default {
-  sqlRouteGet: sqlRouteGetAll,
-  sqlRoutePost: sqlRoutePost
+  sqlRouteGet: sqlRouteGetAll
+  // sqlRoutePost: sqlRoutePost
 };
