@@ -44,7 +44,17 @@ const app = express(); // Turn on our base application
 const PORT = process.env.PORT || 3000; // Set our port number to be flexible when deployed
 const staticFolder = 'client'; // Our HTML and CSS live in the "staticFolder" - client, public, or build are common names
 
-// We let requests come in to our application from any address, which is unusual post-2018
+/*
+  CORS - cross-origin request scripting
+    These lines let our server respond to requests from any public URL
+    CORS protections mostly apply to browsers rather than servers
+    They mean that a client with an address of
+    "http://xyz.ca" cannot access server "http://qrs.com" without a warning
+    or being blocked
+
+    This is to prevent something called cross-site scripting or "XSS" attacks
+    It is useful in real life, but awkward while learning
+*/
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -55,21 +65,25 @@ app.use((req, res, next) => {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Add some auto-reloading to our server if we are in a student's development context
+/* Add live reloading to our static HTML/lab files */
+// On a local server, reload static files when they are changed
 // This will not run if we are on heroku
 let liveReloadServer;
 if (process.env.CONTEXT === 'development') {
-  app.use(connectLivereload());
-
+  app.use(connectLivereload({hostname: 'localhost'})); // adding a port breaks the script injection that makes reload work
   liveReloadServer = livereload.createServer();
   const folder = path.join(__dirname, staticFolder);
   liveReloadServer.watch(folder);
 }
+/* End live reload addition */
 
-//  Set our app structure to use 'http://[whatever-you-chose]/ for our main app
-//  And 'http://[whatever-you-chose]/api for our data
-//  While developing, this will be 'http://localhost:3000' - the number set at line 16 in this file.
-//  In public, it will probably be 'http://your-app-name.heroku.com'
+/*
+  Application Routing
+    Set our app structure to use 'http://[whatever-you-chose]/ for our main app
+    And 'http://[whatever-you-chose]/api for our data
+    While developing, this will be 'http://localhost:3000' - the number set at line 16 in this file.
+    In public, it will probably be 'http://your-app-name.heroku.com'
+*/
 app.use(express.static(staticFolder));
 app.use('/api', apiRoutes);
 
