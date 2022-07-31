@@ -35,10 +35,17 @@ const router = express.Router();
 const __dirname = path.resolve();
 
 // localhost:3000/api when developing locally
+// This is the first API you touch in Lab 4, using a Get request
 router.route('/')
   .get((req, res) => { // .get is the HTTP method for retrieving a resource using a URL
     try { // here we "try" to do some code
       console.log('You touched the default route!');
+
+      const resto = req.query.resto
+
+
+
+
       res.json({ message: 'Welcome to the INST377 API!' });
     } catch (err) { // and here we catch any errors that happen
       // then print a message to you on the server as to what went wrong
