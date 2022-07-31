@@ -1,4 +1,7 @@
-// As the last step of your lab, hook this up to index.html
+/*
+  Hook this script to index.html
+  by adding `<script src="script.js">` just before your closing `</body>` tag
+*/
 
 async function mainEvent() { // the async keyword means we can make API requests
   const form = document.querySelector('.main_form');
