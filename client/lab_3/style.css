@@ -99,6 +99,8 @@ form {
   border-radius: 6px;
   font-size: 1.5rem;
   padding: 1.25rem;
+  margin:0; /* removing the margin on h1 tags means the header pins to the top if we move */
+
 
   /* box-shadows are fancy */
   box-shadow: 0 0.5em 1em -0.125em rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 2%);
@@ -125,21 +127,17 @@ form {
   margin: 0 auto;
 }
 
-.section {
-  margin: 1rem;
-}
-
 .left_section {
-  border: 2px dashed;
-  padding: 1.5rem;
   background-color: rgba(0, 139, 139, 0.8);
+  flex: 0 1 auto;
+  margin: 1rem;
+  padding: 1.5rem;
 }
 
 .right_section {
   background-color: rgba(255, 224, 138, 0.7);
-  border: 1px dashed #000;
-  max-width: 450px;
-  flex-grow: 2;
+  flex: 1 2 auto;
+  margin: 1rem;
   align-items: center;
 }
 
