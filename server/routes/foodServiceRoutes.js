@@ -96,7 +96,7 @@ router.route('/:category')
 
       // this is a data filter!
       // it will run more quickly on your server than your client
-      // because your server has more power to run loops than a small, hot cellphone
+      // because your server has more power to run loops than a small, hot phone
       // This is a small data set, but it is useful for an example
       const filteredData = data.filter(
         (item) => item.category.toLowerCase() === category.toLowerCase()
