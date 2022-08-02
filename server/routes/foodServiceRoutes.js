@@ -50,7 +50,7 @@ router
     */
     try { // Try: This code might work! It might not, though. It's important to res - respond, to seal the request - regardless.
       console.log('You touched the foodService Route!');
-      console.log('req.foodServiceData', req.foodServiceData.length); // this information comes in through the middleware above
+      console.log('req.foodServiceData results in foodServicePG GET', req.foodServiceData.length); // this information comes in through the middleware above
       res.json({ data: req.foodServiceData }); // and here we're closing our route by passing back unfiltered data
     //
     //
