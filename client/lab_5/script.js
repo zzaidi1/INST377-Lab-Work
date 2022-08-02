@@ -8,11 +8,11 @@ async function mainEvent() { // the async keyword means we can make API requests
   form.addEventListener('submit', async (submitEvent) => { // async has to be declared on every function that needs to "await" something
     submitEvent.preventDefault(); // This prevents your page from going to http://localhost:3000/api even if your form still has an action set on it
     console.log('form submission'); // this is substituting for a "breakpoint"
-    const results = await fetch('/api/foodServicePG'); // This accesses some data from our API
-    const arrayFromJson = await results.json(); // This changes it into data we can use - an object
+    const results = await fetch('/api/foodServicePG'); // This sends a GET request to our API, which is defined in /server/routes/foodServiceRoutes.js
+    const arrayFromJson = await results.json(); // This changes the response from the GET into data we can use - an "object"
     console.table(arrayFromJson.data); // this is called "dot notation"
     // arrayFromJson.data - we're accessing a key called 'data' on the returned object
-    // It contains all 1,000 records we need to continue with labs next week
+    // it contains all 1,000 records we need
   });
 }
 
