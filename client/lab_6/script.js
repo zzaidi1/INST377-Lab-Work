@@ -7,11 +7,13 @@
 
 /*
   ## Utility Functions
-    Under this comment goes any utility functions you need - like an inclusive random number selector
+    Under this comment place any utility functions you need - like an inclusive random number selector
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 */
 
-/*
+function injectHTML(list) {
+  console.log('fired injectHTML');
+  /*
   ## JS and HTML Injection
     There are a bunch of methods to inject text or HTML into a document using JS
     Mainly, they're considered "unsafe" because they can spoof a page pretty easily
@@ -19,52 +21,45 @@
     the usual ones are element.innerText and element.innerHTML
     Here's an article on the differences if you want to know more:
     https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent#differences_from_innertext
+
+  ## What to do in this function
+    - Accept a list of restaurant objects
+    - using a .forEach method, inject a list element into your index.html for every element in the list
+    - Display the name of that restaurant and what category of food it is
 */
-function injectHTML(list) {
-  console.log('fired injectHTML');
-  const target = document.querySelector('#restaurant_list');
-  target.innerHTML = '';
-  list.forEach((item) => {
-    const str = `<li>${item.name} </li>`;
-    target.innerHTML += str;
-  });
 }
-
-/*
-  ## Process Data Separately From Injecting It
-    This function should accept your 1,000 records
-    then select 15 random records
-    and return an object containing only the restaurant's name, category, and geocoded location
-    So we can inject them using the HTML injection function
-
-    You can find the column names by carefully looking at your single returned record
-    https://data.princegeorgescountymd.gov/Health/Food-Inspection/umjn-t2iz
-*/
 
 function processRestaurants(list) {
   console.log('fired restaurants list');
-  const range = [...Array(15).keys()]; // Special notation to create an array of 15 elements
 
-  // a Map function is like a forEach, but it returns a new array instead of changing the originals
-  const newArray = range.map((m) => { // The Map function applies a function to each element and returns a new element to a new array
-    const index = getRandomIntInclusive(0, list.length); // here we're getting a random number between nothing and our total list of restaurants
-    return list[index]; // and here we're returning that element to the new array
+  /*
+    ## Process Data Separately From Injecting It
+      This function should accept your 1,000 records
+      then select 15 random records
+      and return an object containing only the restaurant's name, category, and geocoded location
+      So we can inject them using the HTML injection function
 
-    /* This method does not guarantee uniqueness, but it is about as simple to follow as is possible */
-  });
+      You can find the column names by carefully looking at your single returned record
+      https://data.princegeorgescountymd.gov/Health/Food-Inspection/umjn-t2iz
 
-  // Now that we've made an array, we should return it so we can do things with it somewhere else
-  return newArray;
+    ## What to do in this function:
+
+    - Create an array of 15 empty elements (there are a lot of fun ways to do this, and also very basic ways)
+    - using a .map function on that range,
+    - Make a list of 15 random restaurants from your list of 100 from your data request
+    - Return only their name, category, and location
+    - Return the new list of 15 restaurants so we can work on it separately in the HTML injector
+  */
 }
 
-/*
-  ## Main Event
-    Separating your main programming from your side functions will help you organize your thoughts
-    When you're not working in a heavily-commented "learning" file, this also is more legible
-    If you separate your work, when one piece is complete, you can save it and trust it
-*/
-
 async function mainEvent() {
+  /*
+    ## Main Event
+      Separating your main programming from your side functions will help you organize your thoughts
+      When you're not working in a heavily-commented "learning" file, this also is more legible
+      If you separate your work, when one piece is complete, you can save it and trust it
+  */
+
   // the async keyword means we can make API requests
   const form = document.querySelector('.main_form'); // get your main form so you can do JS with it
   const submit = document.querySelector('button[type="submit"]'); // get a reference to your submit button
@@ -79,14 +74,15 @@ async function mainEvent() {
   const arrayFromJson = await results.json(); // here is where we get the data from our request as JSON
 
   /*
-    Here we log out a table of all the results using "dot notation"
+    Below this comment, we log out a table of all the results using "dot notation"
     An alternate notation would be "bracket notation" - arrayFromJson["data"]
     Dot notation is preferred in JS unless you have a good reason to use brackets
     The 'data' key, which we set at line 38 in foodServiceRoutes.js, contains all 1,000 records we need
   */
   console.table(arrayFromJson.data);
 
-  // try expanding this object in your browser console to see what fields are available for display
+  // in your browser console, try expanding this object to see what fields are available to work with
+  // for example: arrayFromJson.data[0].name, etc
   console.log(arrayFromJson.data[0]);
 
   // this is called "string interpolation" and is how we build large text blocks with variables
