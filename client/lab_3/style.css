@@ -227,8 +227,17 @@ div.carousel {
   display: block;
 }
 
+
 .carousel_item img {
+  /*
+   justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  transform:translateY(-50%);
+  transform: translateX(75%);
+  /*
   /* 
+  
     Setting width, rather than max-width or min-width,
     means annoying pop-ins won't happen
     but it also means you need to format your images to be compatible
@@ -239,15 +248,28 @@ div.carousel {
     - now make sure that images are _always_ square
     - ... there's a reason crop tools are popular in image editors
    */
-  width: 150px; 
+   
+  width: 275px; 
+  height: 100px;
 }
+
+
+.carousel_actions {
+  display: flex;
+  width: 25%;
+  justify-content: space-between;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 
 .prev,
 .next {
-  border: none;
+  border: 0;
   margin: 2px;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 100px;
   font-weight: bold;
   height: 45px;
   padding: 10px;
@@ -265,3 +287,5 @@ div.carousel {
 .next:hover {
   /* Pick a good background colour for your hover pseudoclass */
 }
+
+
