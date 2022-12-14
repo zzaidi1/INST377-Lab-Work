@@ -259,7 +259,7 @@ div.carousel {
   width: 25%;
   justify-content: space-between;
   position: absolute;
-  top: 50%;
+  top: 100%;
   transform: translateY(-50%);
 }
 
@@ -288,4 +288,6 @@ div.carousel {
   /* Pick a good background colour for your hover pseudoclass */
 }
 
-
+.prev button#carousel_button--prev {
+  
+}
