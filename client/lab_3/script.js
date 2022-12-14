@@ -7,16 +7,16 @@
 */
 /* eslint-enable max-len */
 // set our first slide's position to "0", the opening position in an array
-slidePosition = 0;
+let slidePosition = 0;
 
 // gather a reference to every slide we're using via the class name and querySelectorAll
-slides = document.querySelectorAll('.carousel_item');
+const slides = document.querySelectorAll('.carousel_item');
 
 // change that "NodeList" into a Javascript "array", to get access to "array methods"
-slidesArray = Array.from(slides);
+const slidesArray = Array.from(slides);
 
 // Figure out how many slides we have available
-totalSlides = slidesArray.length;
+const totalSlides = slidesArray.length;
 
 function updateSlidePosition() {
   // Using the .forEach array method, (array.forEach((element) => { per-element work goes here }))
