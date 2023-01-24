@@ -58,8 +58,5 @@ document.querySelector('.next') // Get the appropriate element (<button class="n
     moveToNextSlide(); // call the function above to handle this
   });
 
-document.querySelector('.prev')
-  .addEventListener('click', () => {
-    console.log('clicked prev');
-    moveToPrevSlide();
-  });
+// Paying close attention to the above queryselector, write one that fires
+// when you want a "prev" slide
